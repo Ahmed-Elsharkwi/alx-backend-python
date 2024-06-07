@@ -8,10 +8,10 @@ from typing import List
 
 def sum_mixed_list(mxd_lst: List[float | int]) -> float:
     """
-    return mix_lst
+    return mxd_lst
     """
     sum = 0.0
 
-    for ele in input_list:
+    for ele in mxd_lst:
         sum += ele
     return sum
