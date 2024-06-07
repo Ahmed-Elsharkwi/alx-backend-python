@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-get the n float number and return the string representation of the 
+get the n float number and return the string representation of the
 float
 """
 
