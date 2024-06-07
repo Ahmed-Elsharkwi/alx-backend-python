@@ -5,7 +5,7 @@ returns their sum as a float.
 """
 
 
-def sum_list(input_list: float) -> float:
+def sum_list(input_list: list[float]) -> float:
     """
     return sum_list
     """
@@ -13,4 +13,4 @@ def sum_list(input_list: float) -> float:
 
     for ele in input_list:
         sum += ele
-    return float(sum)
+    return sum
