@@ -6,7 +6,7 @@ returns their sum as a float.
 from typing import List, Union, Tuple, Callable
 
 
-def make_multiplier(k: float) -> Callable[[float], float]:
+def make_multiplier(multiplier: float) -> Callable[[float], float]:
     """
     return function
     """
