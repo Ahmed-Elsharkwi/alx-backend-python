@@ -40,12 +40,18 @@ def insert_data(connection, file):
 
     with open(file, mode ='r')as file:
         csvFile = csv.DictReader(file)
-
         for item in csvFile:
-            data.append(tuple(item.values()))
-
+            print(item)
+    """
+        i = 0
+        for line in csvFile:
+            if i != 0:
+                data.append(tuple(line))
+            else:
+                i = 1
 
     cursor = connection.cursor()
     insert_st = "INSERT INTO user_data (user_id, name, email, age) VALUES (UUID(), %s, %s, %s)"
     cursor.executemany(insert_st, data)
     connection.commit()
+    """
