@@ -2,7 +2,7 @@
 seed = __import__('seed')
 
 
-def stream_users_batches(batch_size):
+def stream_users_in_batches(batch_size):
     """ fetch the data and return it in batches using yield """
     connection = seed.connect_to_prodev()
     cursor = connection.cursor()
@@ -30,7 +30,7 @@ def stream_users_batches(batch_size):
 
 def batch_processing(batch_size):
     """ that processes each batch to filter users over the age of25 """
-    for batch in stream_users_batches(batch_size):
+    for batch in stream_users_in_batches(batch_size):
         for element in batch:
             if element['age'] > 25:
                 print(element)
