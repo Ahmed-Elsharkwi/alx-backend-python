@@ -3,7 +3,7 @@
 seed = __import__('seed')
 
 
-def stream_users_ages():
+def stream_user_ages():
     """ fetch the data and return it using yield """
     connection = seed.connect_to_prodev()
     cursor = connection.cursor()
@@ -27,7 +27,7 @@ def main():
     sum_ages = 0
     count = 0
 
-    for user in stream_users_ages():
+    for user in stream_user_ages():
         count += 1
         sum_ages += user['age']
 
