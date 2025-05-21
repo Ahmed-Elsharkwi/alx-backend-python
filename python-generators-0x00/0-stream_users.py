@@ -10,6 +10,7 @@ def stream_users():
     cursor.execute(f"SELECT * FROM user_data;")
     rows = cursor.fetchall()
 
+
     for row in rows:
         new_dict = {
             "user_id": row[0],

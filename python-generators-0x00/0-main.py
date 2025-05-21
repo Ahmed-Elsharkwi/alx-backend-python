@@ -21,6 +21,5 @@ if connection:
             print(f"Database ALX_prodev is present ")
         cursor.execute(f"SELECT * FROM user_data LIMIT 5;")
         rows = cursor.fetchall()
-        print(rows)
         cursor.close()
 
