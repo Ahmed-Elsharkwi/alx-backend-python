@@ -20,4 +20,5 @@ def lazy_paginate(page_size):
         if len(rows) == 0:
             break
         yield rows
+
         offest += page_size
