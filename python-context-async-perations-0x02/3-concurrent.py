@@ -12,8 +12,8 @@ async def async_fetch_older_users(cursor):
     cur = await cursor.execute("SELECT * FROM users WHERE age > 40")
     print(await cur.fetchall())
 
-async def main():
+async def fetch_concurrently():
     async with aiosqlite.connect("users.db") as db:
         await asyncio.gather(async_fetch_users(db), async_fetch_older_users(db))
 
-asyncio.run(main())
+asyncio.run(fetch_concurrently())
