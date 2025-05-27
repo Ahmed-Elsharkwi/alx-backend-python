@@ -41,5 +41,5 @@ class TestAccessNestedMap(unittest.TestCase):
             nested_map: Dict,
             path: Tuple[str]) -> None:
         """ test accessnestedmap method and raise keyError incase of error """
-        with self.assertRaise(KeyError):
+        with self.assertRaises(KeyError):
             access_nested_map(nested_map, path)
