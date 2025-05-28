@@ -8,57 +8,57 @@ from parameterized import parameterized
 
 
 from utils import (
-
     access_nested_map,
-
     get_json,
-
     memoize,
-
 )
 
 
 class TestAccessNestedMap(unittest.TestCase):
-    """ class for testing """
+    """class for testing"""
 
-    @parameterized.expand([
-        ({"a": 1}, ("a",), 1),
-        ({"a": {"b": 2}}, ("a",), {"b": 2}),
-        ({"a": {"b": 2}}, ("a", "b"), 2),
-    ])
+    @parameterized.expand(
+        [
+            ({"a": 1}, ("a",), 1),
+            ({"a": {"b": 2}}, ("a",), {"b": 2}),
+            ({"a": {"b": 2}}, ("a", "b"), 2),
+        ]
+    )
     def test_access_nested_map(
-            self,
-            nested_map: Dict,
-            path: Tuple[str],
-            expected: Union[Dict, int]) -> None:
-        """ test access nested map method """
+        self, nested_map: Dict, path: Tuple[str], expected: Union[Dict, int]
+    ) -> None:
+        """test access nested map method"""
         self.assertEqual(access_nested_map(nested_map, path), expected)
 
-    @parameterized.expand([
-        ({}, ("a",)),
-        ({"a": 1}, ("a", "b")),
-    ])
-    def test_access_nested_map_exception(self,
-            nested_map: Dict,
-            path: Tuple[str]) -> None:
-        """ test accessnestedmap method and raise keyError incase of error """
+    @parameterized.expand(
+        [
+            ({}, ("a",)),
+            ({"a": 1}, ("a", "b")),
+        ]
+    )
+    def test_access_nested_map_exception(
+        self, nested_map: Dict, path: Tuple[str]
+    ) -> None:
+        """test accessnestedmap method and raise keyError incase of error"""
         with self.assertRaises(KeyError):
             access_nested_map(nested_map, path)
 
 
 class TestGetJson(unittest.TestCase):
-    """class for testing get json function""" 
-    
-    @parameterized.expand([
-        ("http://example.com", {"payload": True}),
-        ("http://holberton.io", {"payload": False})
-    ])
+    """class for testing get json function"""
+
+    @parameterized.expand(
+        [
+            ("http://example.com", {"payload": True}),
+            ("http://holberton.io", {"payload": False}),
+        ]
+    )
     def test_get_json(
-            self,
-            url: str,
-            payload: Dict,
-            ) -> None:
-        """ test the get json function """
+        self,
+        url: str,
+        payload: Dict,
+    ) -> None:
+        """test the get json function"""
         with patch("utils.requests.get") as mock_get:
             mokc_response = Mock()
             mokc_response.json.return_value = payload
@@ -67,12 +67,15 @@ class TestGetJson(unittest.TestCase):
 
         self.assertEqual(result, payload)
 
+
 class TestMemoize(unittest.TestCase):
-    """ class for testing memoziation """
-    def test_memoize(self) -> None: 
-        """ test memoization """
+    """class for testing memoziation"""
+
+    def test_memoize(self) -> None:
+        """test memoization"""
+
         class TestClass:
-            """Test class """
+            """Test class"""
 
             def a_method(self) -> int:
                 return 42
@@ -91,8 +94,3 @@ class TestMemoize(unittest.TestCase):
 
             self.assertEqual(result_1, 42)
             self.assertEqual(result_2, 42)
-
-    
-
-
-
