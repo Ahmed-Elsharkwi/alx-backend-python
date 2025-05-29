@@ -37,7 +37,7 @@ class TestGithubOrgClient(unittest.TestCase):
     def test_public_repos_url(self, url: str) -> None:
         """test the puplic repos_url"""
         with patch(
-                "client.GithubOrgClient.org", new_callable=PropertyMock)as m:
+                "client.GithubOrgClient.org", new_callable=PropertyMock) as m:
             result = {"repos_url": True}
             m.return_value = result
 
@@ -46,18 +46,19 @@ class TestGithubOrgClient(unittest.TestCase):
 
     @parameterized.expand(
         [
-            ("google"),
-            ("abc"),
+            ("google",),
+            ("abc",),
         ]
     )
     @patch("client.get_json")
     def test_public_repos(self, url: str, mock_get_json: Callable) -> None:
-        """ test public repos method """
+        """test public repos method"""
         mock_get_json.return_value = [{"name": "Fuck"}]
 
         with patch(
-                "client.GithubOrgClient._public_repos_url",
-                new_callable=PropertyMock) as mock_public_repos:
+            "client.GithubOrgClient._public_repos_url",
+            new_callable=PropertyMock
+        ) as mock_public_repos:
             mock_public_repos.return_value = "You"
             obj = GithubOrgClient(url)
 
@@ -66,5 +67,3 @@ class TestGithubOrgClient(unittest.TestCase):
             mock_public_repos.assert_called_once()
 
         mock_get_json.assert_called_once_with("You")
-
-
