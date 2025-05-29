@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 """ module for testing access_nested_map """
-from flask import jsonify
 import unittest
 from typing import Dict, Tuple, Union, Callable
 from unittest.mock import patch, Mock
