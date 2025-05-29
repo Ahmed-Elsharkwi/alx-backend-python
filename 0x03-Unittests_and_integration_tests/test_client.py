@@ -63,3 +63,8 @@ class TestGithubOrgClient(unittest.TestCase):
 
             repos = obj.public_repos()
             self.assertListEqual(repos, ["Fuck"])
+            mock_public_repos.assert_called_once_with()
+
+        mock_get_json.assert_called_once_with("You")
+
+
