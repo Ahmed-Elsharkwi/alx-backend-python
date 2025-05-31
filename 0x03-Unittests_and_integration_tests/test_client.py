@@ -94,31 +94,30 @@ class TestGithubOrgClient(unittest.TestCase):
 
 @parameterized_class(parameter_sets)
 class TestIntegrationGithubOrgClient(unittest.TestCase):
-    """ test the integration test """
+    """ Integration test for GithubOrgClient.public_repos """
 
     @classmethod
     def setUpClass(cls):
-        """  should mock requests.get to return example payloads """
+        """Mock requests.get to return example payloads"""
         cls.get_patcher = patch("utils.requests.get")
         cls.mock_get = cls.get_patcher.start()
-        make_response = Mock()
 
         def side_effect(url):
-            """ side effect """
-            print(url)
-            if url != "https://api.github.com/orgs/google/repos":
-                make_response.json.return_value = cls.org_payload
-            else:
-                make_response.json.return_value = cls.repos_payload
-            return make_response
+            mock_response = Mock()
+            if url == "https://api.github.com/orgs/google":
+                mock_response.json.return_value = cls.org_payload
+            elif url == "https://api.github.com/orgs/google/repos":
+                mock_response.json.return_value = cls.repos_payload
+            return mock_response
+
         cls.mock_get.side_effect = side_effect
 
-    def test_side_effect(self):
-        """ test method """
-        obj = GithubOrgClient("inst")
-        self.assertEqual(obj.public_repos(), self.expected_repos)
+    def test_public_repos(self):
+        """Test public_repos method returns expected results"""
+        client = GithubOrgClient("google")
+        self.assertEqual(client.public_repos(), self.expected_repos)
 
     @classmethod
     def tearDownClass(cls):
-        """ stop the patcher """
+        """Stop patcher"""
         cls.get_patcher.stop()
