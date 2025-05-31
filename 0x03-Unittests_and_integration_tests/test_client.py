@@ -99,9 +99,8 @@ class TestIntegrationGithubOrgClient(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         """  should mock requests.get to return example payloads """
-        cls.mock_get = patch("utils.requests.get").start()
+        cls.get_patcher = patch("utils.requests.get").start()
         make_response = Mock()
-        args, kargs = cls.mock_get.call_agrs or None, None
 
         def side_effect(url):
             """ side effect """
@@ -111,7 +110,7 @@ class TestIntegrationGithubOrgClient(unittest.TestCase):
             else:
                 make_response.json.return_value = cls.repos_payload
             return make_response
-        cls.mock_get.side_effect = side_effect
+        cls.get_patcher.side_effect = side_effect
 
     def test_side_effect(self):
         """ test method """
@@ -121,4 +120,4 @@ class TestIntegrationGithubOrgClient(unittest.TestCase):
     @classmethod
     def tearDownClass(cls):
         """ stop the patcher """
-        cls.mock_get.stop()
+        cls.get_patcher.stop()
