@@ -99,7 +99,8 @@ class TestIntegrationGithubOrgClient(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         """  should mock requests.get to return example payloads """
-        cls.get_patcher = patch("utils.requests.get").start()
+        cls.get_patcher = patch("utils.requests.get")
+        cls.mock_get = cls.get_patcher.start()
         make_response = Mock()
 
         def side_effect(url):
@@ -110,7 +111,7 @@ class TestIntegrationGithubOrgClient(unittest.TestCase):
             else:
                 make_response.json.return_value = cls.repos_payload
             return make_response
-        cls.get_patcher.side_effect = side_effect
+        cls.mock_get.side_effect = side_effect
 
     def test_side_effect(self):
         """ test method """
