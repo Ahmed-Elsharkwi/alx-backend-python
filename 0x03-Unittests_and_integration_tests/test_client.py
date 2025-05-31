@@ -3,9 +3,20 @@
 import unittest
 from typing import Dict, Tuple, Union, Callable
 from unittest.mock import patch, Mock, PropertyMock
-from parameterized import parameterized
-
+from parameterized import parameterized, parameterized_class
 from client import GithubOrgClient
+from fixtures import TEST_PAYLOAD
+
+# Create parameter sets from the TEST_PAYLOAD tuples
+parameter_sets = [
+    {
+        "org_payload": org,
+        "repos_payload": repos,
+        "expected_repos": expected,
+        "apache2_repos": apache2
+    }
+    for org, repos, expected, apache2 in TEST_PAYLOAD
+]
 
 
 class TestGithubOrgClient(unittest.TestCase):
@@ -79,3 +90,35 @@ class TestGithubOrgClient(unittest.TestCase):
         obj = GithubOrgClient("url")
 
         self.assertEqual(obj.has_license(dict_1, lic), res)
+
+
+@parameterized_class(parameter_sets)
+class TestIntegrationGithubOrgClient(unittest.TestCase):
+    """ test the integration test """
+
+    @classmethod
+    def setUpClass(cls):
+        """  should mock requests.get to return example payloads """
+        cls.mock_get = patch("utils.requests.get").start()
+        make_response = Mock()
+        args, kargs = cls.mock_get.call_agrs or None, None
+
+        def side_effect(url):
+            """ side effect """
+            print(url)
+            if url != "https://api.github.com/orgs/google/repos":
+                make_response.json.return_value = cls.org_payload
+            else:
+                make_response.json.return_value = cls.repos_payload
+            return make_response
+        cls.mock_get.side_effect = side_effect
+
+    def test_side_effect(self):
+        """ test method """
+        obj = GithubOrgClient("inst")
+        self.assertEqual(obj.public_repos(), self.expected_repos)
+
+    @classmethod
+    def tearDownClass(cls):
+        """ stop the patcher """
+        cls.mock_get.stop()
