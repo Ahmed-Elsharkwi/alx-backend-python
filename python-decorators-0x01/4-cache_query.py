@@ -18,6 +18,7 @@ query_cache = {}
 def cache_query(func):
     """ cache the result of the query """
     def wrapper(conn, query):
+        print(query_cache)
         if query not in query_cache:
             query_cache[query] = func(conn, query)
         
