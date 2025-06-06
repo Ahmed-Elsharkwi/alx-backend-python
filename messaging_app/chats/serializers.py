@@ -1,6 +1,6 @@
 """ serializers module """
 from rest_framework import serializers
-from chats.models import User, Conversation, message
+from .models import User, Conversation, message
 
 
 class UserSerializer(serializer.ModelSerializer):
