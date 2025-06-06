@@ -12,7 +12,7 @@ class UserSerializer(serializer.ModelSerializer):
 
 class MessageSerializer(serializer.ModelSerializer):
     """ Message serializer class """
-    message_body = serializer.CharField(max_length=500)
+    message_body = serializers.CharField(max_length=500)
 
     class Meta:
         model = Message
