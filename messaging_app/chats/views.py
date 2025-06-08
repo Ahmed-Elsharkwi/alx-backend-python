@@ -7,12 +7,15 @@ from rest_framework import viewsets
 from chats.models import Conversation, Message
 from chats.serializers import ConversationSerializer, MessageSerializer
 from rest_framework.decorators import api_view
+from chats.permissions import IsParticipantOfConversation
 
 
 class ConversationViewSet(viewsets.ViewSet):
     """
     A simple ViewSet for listing or retrieving conversations.
     """
+    permission_classes = [IsParticipantOfConversation]
+
     def list(self, request):
         queryset = Conversation.objects.all()
         serializer = ConversationSerializer(queryset, many=True)
