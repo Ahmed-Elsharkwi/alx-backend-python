@@ -25,8 +25,8 @@ class Conversation(models.Model):
 class Message(models.Model):
     """ create a message for each conversation which is related to each user"""
     message_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    conversation = models.ForeignKey(Conversation, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, null = True, on_delete=models.CASCADE)
+    conversation = models.ForeignKey(Conversation, null = True, on_delete=models.CASCADE)
     message_body = models.CharField(max_length=500)
     sent_at = models.DateField()
     created_at = models.DateField()
